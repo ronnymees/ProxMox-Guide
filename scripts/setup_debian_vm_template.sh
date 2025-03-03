@@ -45,15 +45,6 @@ read
 
 # Stap 7: Installeer Docker, Docker Compose en Tailscale via SSH
 echo "Installing software inside the VM..."
-# qm terminal $TEMPLATE_ID << 'EOF'
-# sudo -i <<EOSU
-# apt update && apt upgrade -y
-# apt install -y docker.io docker-compose
-# usermod -aG docker student
-# curl -fsSL https://tailscale.com/install.sh | sh
-# systemctl enable --now tailscaled
-# EOSU
-# EOF
 qm exec $TEMPLATE_ID -- bash -c "apt update && apt upgrade -y"
 qm exec $TEMPLATE_ID -- bash -c "apt install -y docker.io docker-compose"
 qm exec $TEMPLATE_ID -- bash -c "usermod -aG docker student"
@@ -67,7 +58,7 @@ qm shutdown $TEMPLATE_ID --timeout 60
 sleep 5
 qm template $TEMPLATE_ID
 
-echo "Debian Cloud-Init template is klaar! 🚀"
+echo "Debian template ($TEMPLATE_NAME) is klaar met QEMU Guest Agent, Docker, en Tailscale!"
 
 
 
