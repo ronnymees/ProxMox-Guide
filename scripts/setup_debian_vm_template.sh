@@ -17,7 +17,7 @@ wget -q --show-progress -O $DEBIAN_IMAGE $DEBIAN_URL
 
 # Stap 2: Nieuwe VM aanmaken
 echo "Creating Proxmox VM template ($TEMPLATE_ID)..."
-qm create $TEMPLATE_ID --name $TEMPLATE_NAME --memory $RAM_SIZE --core $CPU_CORES --net0 virtio,bridge=$BRIDGE
+qm create $TEMPLATE_ID --name $TEMPLATE_NAME --memory $RAM_SIZE --cores $CPU_CORES --net0 virtio,bridge=$BRIDGE
 
 # Stap 3: Image importeren en instellen
 echo "Importing disk image..."
@@ -51,8 +51,10 @@ qm exec $TEMPLATE_ID -- bash -c "usermod -aG docker student"
 qm exec $TEMPLATE_ID -- bash -c "curl -fsSL https://tailscale.com/install.sh | sh"
 qm exec $TEMPLATE_ID -- bash -c "systemctl enable --now tailscaled"
 
+# Stap 8: opschonen
+rm $DEBIAN_IMAGE
 
-# Stap 8: Zet de VM uit en maak een template
+# Stap 9: Zet de VM uit en maak een template
 echo "Shutting down VM and converting to template..."
 qm shutdown $TEMPLATE_ID --timeout 60
 sleep 5
