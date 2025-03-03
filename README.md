@@ -6,9 +6,8 @@ At the start of a new academic year you update the script `setup_debian_vm_templ
 
 Then run the script from the ProxMox Terminal:
 
-<!-- TODO : URL nog aanpassen -->
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/jouw-gebruikersnaam/proxmox-debian-template/main/setup_debian_template.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/setup_debian_vm_template.sh)
 ```
 
 ## Create the csv-file with student credentials
@@ -26,7 +25,6 @@ vmid,naam,user,password,ip
 
 ## Clone the template for all student VM's
 
-<!-- TODO : URL nog aanpassen -->
 ```bash
-bash <(wget -qO- https://raw.githubusercontent.com/jouw-gebruikersnaam/proxmox-debian-template/main/deploy_vms.sh)
+bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/deploy_vms.sh)
 ```
