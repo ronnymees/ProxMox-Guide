@@ -14,10 +14,10 @@ do
         continue
     fi
 
-    echo "Cloning VM $TEMPLATE_ID to $vmid ($naam)..."
+    echo "Cloning VM $TEMPLATE_ID to $vmid ($name)..."
 
     # Clone de VM vanuit de template
-    qm clone $TEMPLATE_ID $vmid --name $naam --full --storage $STORAGE
+    qm clone $TEMPLATE_ID $vmid --name $name --full --storage $STORAGE
 
     # Cloud-Init instellingen toepassen
     qm set $vmid --net0 virtio,bridge=$BRIDGE
@@ -29,7 +29,7 @@ do
     # Start de VM
     qm start $vmid
 
-    echo "VM $naam ($vmid) is aangemaakt en gestart."
+    echo "VM $name ($vmid) is aangemaakt en gestart."
 
 done < "$CSV_FILE"
 
