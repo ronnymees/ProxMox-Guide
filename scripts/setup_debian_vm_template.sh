@@ -11,7 +11,7 @@ DISK_RESIZE="+13G"
 RAM_SIZE="2048"
 CPU_CORES="2"
 CLOUD_INIT_NAME="snippets/install-packages.yaml"
-CLOUD_INIT_URL=""
+CLOUD_INIT_URL="https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/cloud-init/install-packages.yaml"
 
 # Stap 1: Download de Debian Cloud-Init-image
 echo "Downloading Debian Cloud-Init image..."
