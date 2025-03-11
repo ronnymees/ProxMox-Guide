@@ -22,7 +22,7 @@ vmid,name,user,password,ip
 113,vm-student3,student3,passw0rd3,192.168.1.113
 ```
 
-💡It is best to create this file in Excel and save it as .csv. In ProxMox create the file via `nano /root/vms.csv` and copy the contents via **CRTL+X**, **Y**, and **ENTER**.
+💡It is best to create this file in Excel and save it as .csv. In ProxMox create the file via `nano /root/vms.csv` and copy the contents via **CRTL+C** / **CTRL+V**. Save and close with **CTRL+O** and **CTRL+X**.
 
 ## Clone the template for all student VM's
 

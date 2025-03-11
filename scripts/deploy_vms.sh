@@ -35,4 +35,4 @@ done < "$CSV_FILE"
 # Step 2 - Delete the CSV file after use
 rm -f $CSV_FILE
 
-echo "All VMs have been created successfully!"
+echo "All VMs have been created and started successfully!"
