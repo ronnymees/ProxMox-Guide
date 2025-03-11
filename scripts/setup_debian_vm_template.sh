@@ -47,7 +47,7 @@ read
 
 # Step 7: Install Docker, Docker Compose and Tailscale via ssh
 ssh-keygen -f "/root/.ssh/known_hosts" -R $TEMPLATE_IP
-ssh student@$TEMPLATE_IP "sudo apt update && sudo apt install -y qemu-guest-agent && sudo systemctl enable --now qemu-guest-agent"
+yes | ssh student@$TEMPLATE_IP "sudo apt update && sudo apt install -y qemu-guest-agent && sudo systemctl enable --now qemu-guest-agent"
 ssh student@$TEMPLATE_IP "sudo apt install -y docker.io docker-compose"
 ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
 ssh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"

@@ -17,9 +17,9 @@ Create the csv-file `vms.csv` containing the student credentials vmid, name, use
 
 ```csv
 vmid,name,user,password,ip
-111,vm-student1,student1,passw0rd1,192.168.1.111
-112,vm-student2,student2,passw0rd2,192.168.1.112
-113,vm-student3,student3,passw0rd3,192.168.1.113
+111,vmstudent1,student1,passw0rd1,192.168.1.111
+112,vmstudent2,student2,passw0rd2,192.168.1.112
+113,vmstudent3,student3,passw0rd3,192.168.1.113
 ```
 
 💡It is best to create this file in Excel and save it as .csv. In ProxMox create the file via `nano /root/vms.csv` and copy the contents via **CRTL+C** / **CTRL+V**. Save and close with **CTRL+O** and **CTRL+X**.
