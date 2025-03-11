@@ -1,5 +1,5 @@
 # Settings
-TEMPLATE_ID=9000  
+TEMPLATE_ID=9000  # ID voor de Cloud-Init-template
 TEMPLATE_NAME="debian-cloudinit"
 STORAGE="local-zfs"
 BRIDGE="vmbr0"
@@ -41,9 +41,30 @@ qm set $TEMPLATE_ID --agent enabled=1
 # Step 6: Start the VM to install the OS
 echo "Starting VM for software installation..."
 qm start $TEMPLATE_ID
-echo "In the ProxMox dashboard go to the console of the newly made VM "$TEMPLATE_ID
-echo "Press Enter when the OS installation is ready and you see the login prompt..."
+echo "Press Enter when the OS installation is ready..."
 read
+
+# Step 7: Install Docker, Docker Compose and Tailscale via QEMU agent
+
+#CLOUD_INIT_NAME="install-packages.yaml"
+#CLOUD_INIT_URL="https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/cloud-init/$CLOUD_INIT_NAME"
+
+#echo "Installing software inside the VM..."
+#qm guest exec $TEMPLATE_ID -- bash -c "apt update && apt upgrade -y"
+#qm guest exec $TEMPLATE_ID -- bash -c "apt install -y docker.io docker-compose"
+#qm guest exec $TEMPLATE_ID -- bash -c "usermod -aG docker student"
+#qm guest exec $TEMPLATE_ID -- bash -c "curl -fsSL https://tailscale.com/install.sh | sh"
+#qm guest exec $TEMPLATE_ID -- bash -c "systemctl enable --now tailscaled"
+
+# Step 7: Install Docker, Docker Compose and Tailscale via Cloud-init
+#echo "Downloading Cloud-Init configuration..."
+#wget -q -O /var/lib/vz/snippets/$CLOUD_INIT_NAME $CLOUD_INIT_URL
+#qm set 9000 --cicustom "user=local:snippets/$CLOUD_INIT_NAME"
+#qm cloudinit update $TEMPLATE_ID
+#qm shutdown $TEMPLATE_ID
+#while qm status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
+#qm start $TEMPLATE_ID
+#while qm status $TEMPLATE_ID | grep -q "running"; done ; do sleep 2
 
 # Step 7: Install Docker, Docker Compose and Tailscale via ssh
 ssh-keygen -f "/root/.ssh/known_hosts" -R $TEMPLATE_IP

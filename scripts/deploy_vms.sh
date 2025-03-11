@@ -1,39 +1,38 @@
-#!/bin/bash
-
-# Instellingen
-TEMPLATE_ID=9000  # ID van de Debian Cloud-Init-template
-STORAGE="local-lvm"
+# Settings
+TEMPLATE_ID=9000
+STORAGE="local-zfs"
 BRIDGE="vmbr0"
 CSV_FILE="/root/vms.csv"
+GATEWAY="192.168.1.1"
 
-# CSV inlezen en verwerken
+# Step 1 - Import and process CSV
 while IFS=, read -r vmid naam user password ip
 do
-    # Sla de header over
+    # Skip the header
     if [[ "$vmid" == "vmid" ]]; then
         continue
     fi
 
     echo "Cloning VM $TEMPLATE_ID to $vmid ($name)..."
 
-    # Clone de VM vanuit de template
+    # Clone the VM from the template
     qm clone $TEMPLATE_ID $vmid --name $name --full --storage $STORAGE
 
-    # Cloud-Init instellingen toepassen
+    # Apply Cloud-Init settings
     qm set $vmid --net0 virtio,bridge=$BRIDGE
-    qm set $vmid --ipconfig0 ip=$ip/24,gw=192.168.1.1
+    qm set $vmid --ipconfig0 ip=$ip/24,gw=$GATEWAY
     qm set $vmid --ciuser $user
     qm set $vmid --cipassword $password
     qm set $vmid --sshkey /root/.ssh/id_rsa.pub
 
-    # Start de VM
+    # Start the VM
     qm start $vmid
 
-    echo "VM $name ($vmid) is aangemaakt en gestart."
+    echo "VM $name ($vmid) has been created and started."
 
 done < "$CSV_FILE"
 
-# Verwijder het CSV-bestand na gebruik
+# Step 2 - Delete the CSV file after use
 rm -f $CSV_FILE
 
-echo "Alle VM's zijn succesvol aangemaakt! 🚀"
+echo "All VMs have been created successfully!"
