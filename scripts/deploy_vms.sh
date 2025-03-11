@@ -6,7 +6,7 @@ CSV_FILE="/root/vms.csv"
 GATEWAY="192.168.1.1"
 
 # Step 1 - Import and process CSV
-while IFS=, read -r vmid naam user password ip
+while IFS=, read -r vmid name user password ip
 do
     # Skip the header
     if [[ "$vmid" == "vmid" ]]; then
