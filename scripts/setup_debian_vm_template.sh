@@ -10,7 +10,7 @@ RAM_SIZE="2048"
 CPU_CORES="2"
 TEMPLATE_IP="192.168.1.120"
 GATEWAY="192.168.1.1"
-SERVICE=""
+SERVICE="https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/regenerate_ssh_host_keys.service"
 
 # Step 1: Download the Debian Cloud-Init-image
 echo "Downloading Debian Cloud-Init image..."
@@ -49,15 +49,15 @@ read
 # Step 7: Install Docker, Docker Compose and Tailscale via ssh
 ssh-keygen -f "/root/.ssh/known_hosts" -R $TEMPLATE_IP
 yes | ssh student@$TEMPLATE_IP "sudo apt update && sudo apt install -y qemu-guest-agent && sudo systemctl enable --now qemu-guest-agent"
-ssh student@$TEMPLATE_IP "sudo apt install -y docker.io docker-compose"
-ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
-ssh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
-ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
+yes | ssh student@$TEMPLATE_IP "sudo apt install -y docker.io docker-compose"
+yes | ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
+yes | sh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
+yes | ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
 
 # Step 8 : Reset ssh keys
-ssh student@$TEMPLATE_IP "sudo wget -P /etc/systemd/system/ $SERVICE"
-ssh student@$TEMPLATE_IP "sudo chown root:root /etc/systemd/system/regenerate_shh_host_keys.service"
-ssh student@$TEMPLATE_IP "sudo systemctl enable regenerate_shh_host_keys.service"
+yes | ssh student@$TEMPLATE_IP "sudo wget -P /etc/systemd/system/ $SERVICE"
+yes | ssh student@$TEMPLATE_IP "sudo chown root:root /etc/systemd/system/regenerate_ssh_host_keys.service"
+yes | ssh student@$TEMPLATE_IP "sudo systemctl enable regenerate_ssh_host_keys.service"
 
 # Step 9: Cleaning up
 rm $DEBIAN_IMAGE
