@@ -54,15 +54,10 @@ yes | ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
 yes | sh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
 yes | ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
 
-# Step 8 : Reset ssh keys
-yes | ssh student@$TEMPLATE_IP "sudo wget -P /etc/systemd/system/ $SERVICE"
-yes | ssh student@$TEMPLATE_IP "sudo chown root:root /etc/systemd/system/regenerate_ssh_host_keys.service"
-yes | ssh student@$TEMPLATE_IP "sudo systemctl enable regenerate_ssh_host_keys.service"
-
-# Step 9: Cleaning up
+# Step 8: Cleaning up
 rm $DEBIAN_IMAGE
 
-# Step 10: Shutdown the VM and convert it to a template
+# Step 9: Shutdown the VM and convert it to a template
 echo "Shutting down VM and converting to template..."
 qm shutdown $TEMPLATE_ID --timeout 60
 while qm status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
