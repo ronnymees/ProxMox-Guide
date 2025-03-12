@@ -10,6 +10,7 @@ RAM_SIZE="2048"
 CPU_CORES="2"
 TEMPLATE_IP="192.168.1.120"
 GATEWAY="192.168.1.1"
+SERVICE=""
 
 # Step 1: Download the Debian Cloud-Init-image
 echo "Downloading Debian Cloud-Init image..."
@@ -53,10 +54,15 @@ ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
 ssh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
 ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
 
-# Step 8: Cleaning up
+# Step 8 : Reset ssh keys
+ssh student@$TEMPLATE_IP "sudo wget -P /etc/systemd/system/ $SERVICE"
+ssh student@$TEMPLATE_IP "sudo chown root:root /etc/systemd/system/regenerate_shh_host_keys.service"
+ssh student@$TEMPLATE_IP "sudo systemctl enable regenerate_shh_host_keys.service"
+
+# Step 9: Cleaning up
 rm $DEBIAN_IMAGE
 
-# Step 9: Shutdown the VM and convert it to a template
+# Step 10: Shutdown the VM and convert it to a template
 echo "Shutting down VM and converting to template..."
 qm shutdown $TEMPLATE_ID --timeout 60
 while qm status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
