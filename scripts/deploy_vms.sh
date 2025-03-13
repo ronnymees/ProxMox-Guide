@@ -22,8 +22,7 @@ do
     qm set $vmid --net0 virtio,bridge=$BRIDGE
     qm set $vmid --ipconfig0 ip=$ip/24,gw=$GATEWAY
     qm set $vmid --ciuser $user
-    qm set $vmid --cipassword $password
-    qm set $vmid --sshkey /root/.ssh/id_rsa.pub
+    qm set $vmid --cipassword $password    
 
     # Start the VM
     qm start $vmid
