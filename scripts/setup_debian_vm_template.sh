@@ -51,7 +51,7 @@ ssh-keygen -f "/root/.ssh/known_hosts" -R $TEMPLATE_IP
 yes | ssh student@$TEMPLATE_IP "sudo apt update && sudo apt install -y qemu-guest-agent && sudo systemctl enable --now qemu-guest-agent"
 yes | ssh student@$TEMPLATE_IP "sudo apt install -y docker.io docker-compose"
 yes | ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
-yes | sh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
+yes | ssh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
 yes | ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
 
 # Step 8: Cleaning up
