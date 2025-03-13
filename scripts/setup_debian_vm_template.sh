@@ -10,7 +10,7 @@ RAM_SIZE="2048"
 CPU_CORES="2"
 TEMPLATE_IP="192.168.1.120"
 GATEWAY="192.168.1.1"
-SERVICE="https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/regenerate_ssh_host_keys.service"
+SSHD_URL="https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/sshd_config"
 
 # Step 1: Download the Debian Cloud-Init-image
 echo "Downloading Debian Cloud-Init image..."
@@ -54,10 +54,13 @@ yes | ssh student@$TEMPLATE_IP "sudo usermod -aG docker student"
 yes | ssh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh | sh"
 yes | ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
 
-# Step 8: Cleaning up
+# Step 8 - Change file for username/password identification
+yes | ssh student@$TEMPLATE_IP "sudo wget -q /etc/ssh/sshd_config $SSHD_URL"
+
+# Step 9: Cleaning up
 rm $DEBIAN_IMAGE
 
-# Step 9: Shutdown the VM and convert it to a template
+# Step 10: Shutdown the VM and convert it to a template
 echo "Shutting down VM and converting to template..."
 qm shutdown $TEMPLATE_ID --timeout 60
 while qm status $TEMPLATE_ID | grep -q "running"; do sleep 2; done

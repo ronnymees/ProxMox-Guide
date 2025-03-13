@@ -4,7 +4,6 @@ STORAGE="local-zfs"
 BRIDGE="vmbr0"
 CSV_FILE="/root/vms.csv"
 GATEWAY="192.168.1.1"
-SSHD_URL="https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/sshd_config"
 
 # Step 1 - Import and process CSV
 while IFS=, read -r vmid name user password ip
@@ -27,10 +26,6 @@ do
 
     # Start the VM
     qm start $vmid
-
-    # Change file for username/password identification
-    yes | ssh student@$ip "sudo wget -q /etc/ssh/sshd_config $SSHD_URL"
-
     echo "VM $name ($vmid) has been created and started."
 
 done < "$CSV_FILE"
