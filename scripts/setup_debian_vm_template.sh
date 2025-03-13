@@ -54,7 +54,7 @@ yes | ssh student@$TEMPLATE_IP "sudo curl -fsSL https://tailscale.com/install.sh
 yes | ssh student@$TEMPLATE_IP "sudo systemctl enable --now tailscaled"
 
 # Step 8 - Change file for username/password identification
-ssh student@$TEMPLATE_IP 'sudo echo -e "PasswordAuthentication yes" >> /etc/ssh/ssh_config'
+ssh student@$TEMPLATE_IP 'sudo bash -c "echo 'PasswordAuthentication yes' >> /etc/ssh/ssh_config"'
 
 # Step 9: Cleaning up
 rm $DEBIAN_IMAGE
