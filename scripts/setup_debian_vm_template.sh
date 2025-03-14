@@ -64,8 +64,7 @@ echo "Shutting down VM and converting to template..."
 qm shutdown $TEMPLATE_ID --timeout 60
 while qm status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
 qm template $TEMPLATE_ID
-
-echo "Debian template ($TEMPLATE_NAME) is ready with QEMU Guest Agent, Docker, en Tailscale pre-installed!"
+echo "Debian VM template ($TEMPLATE_NAME) is ready with QEMU Guest Agent, Docker, en Tailscale pre-installed!"
 
 
 
