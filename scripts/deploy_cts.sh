@@ -33,6 +33,7 @@ do
         apt update && apt install -y openssh-server &&
         useradd -m -s /bin/bash $user &&
         echo '$user:$password' | chpasswd &&
+        usermod -aG sudo $user &&
         echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers &&
         usermod -aG docker $user &&
         sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
