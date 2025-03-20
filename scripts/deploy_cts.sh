@@ -16,7 +16,7 @@ do
     echo "Cloning container $TEMPLATE_ID to $ctid ($name)..."
 
     # Clone the LXC container from the template
-    pct clone $TEMPLATE_ID $ctid --hostname $name --storage $STORAGE
+    pct clone $TEMPLATE_ID $ctid --hostname $name 
 
     # Set container configurations
     pct set $ctid --net0 name=eth0,bridge=$BRIDGE,ip=$ip/24,gw=$GATEWAY
