@@ -45,8 +45,8 @@ pct exec $TEMPLATE_ID -- bash -c "
 
 # Step 6: Shutting down the container and convert it to a template
 echo "Shutting down the container and converting it to a template..."
-pct stop $TEMPLATE_ID --timeout 60
-while ptc status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
+pct shutdown $TEMPLATE_ID
+while pct status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
 pct template $TEMPLATE_ID
 echo "LXC container template created successfully with ID $TEMPLATE_ID and IP address $IP_ADDRESS."
 

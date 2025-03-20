@@ -41,7 +41,7 @@ At te start of the new academic year update the script `setup_debian_ct_template
 Then run the script from the ProxMox Terminal:
 
 ```bash
-bash <(wget -qO- ??)
+bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/setup_debian_ct_template.sh)
 ```
 💡 This script will pause for the installation of the OS, you should watch it in the console on ProxMox and wait for it to finish before hitting enter on the script to resume.
 

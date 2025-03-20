@@ -1,8 +1,8 @@
 # Settings
 TEMPLATE_ID=9100
-STORAGE="local"
+STORAGE="local-zfs"
 BRIDGE="vmbr0"
-CSV_FILE="/root/cts.csv"
+CSV_FILE="/root/vms.csv"
 GATEWAY="192.168.1.1"
 
 # Step 1 - Import and process CSV
@@ -13,23 +13,38 @@ do
         continue
     fi
 
-    echo "Cloning CT $TEMPLATE_ID to $ctid ($name)..."
+    echo "Cloning container $TEMPLATE_ID to $ctid ($name)..."
 
-    # Clone the CT from the template
-    ptc clone $TEMPLATE_ID $ctid --hostname $name --full --storage $STORAGE
+    # Clone the LXC container from the template
+    pct clone $TEMPLATE_ID $ctid --hostname $name --storage $STORAGE
 
-    # Apply settings
-    ptc set --net0 name=eth0,bridge=$BRIDGE,firewall=1,gw=$GATEWAY,ip=$ip/24,tag=10,type=veth
-    
-    # Start the CT    
-    ptc start $ctid
-    while ptc status $ctid | grep -q "running"; done ; do sleep 2
-    ssh root@$ip "useradd -m -p $(openssl passwd -1 ${PASSWORD}) -s /bin/bash -G sudo ${USERNAME}"
-    echo "CT $name ($ctid) has been created and started."
+    # Set container configurations
+    pct set $ctid --net0 name=eth0,bridge=$BRIDGE,ip=$ip/24,gw=$GATEWAY
+    pct set $ctid --unprivileged 1
+    pct set $ctid --onboot 1
+    pct set $ctid --start 1
+
+    # Start the container
+    pct start $ctid
+    echo "Container $name ($ctid) has been created and started."
+
+    # Configure the user inside the container
+    pct exec $ctid -- bash -c "
+        apt update && apt install -y openssh-server &&
+        useradd -m -s /bin/bash $user &&
+        echo '$user:$password' | chpasswd &&
+        echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers &&
+        sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
+        sed -i 's/^#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config &&
+        systemctl enable ssh &&
+        systemctl restart ssh"
+
+    echo "User $user has been created inside container $name ($ctid) with SSH access."
 
 done < "$CSV_FILE"
 
 # Step 2 - Delete the CSV file after use
-rm -f $CSV_FILE
+rm -f "$CSV_FILE"
 
-echo "All CTs have been created and started successfully!"
+echo "All containers have been created and configured successfully!"
+
