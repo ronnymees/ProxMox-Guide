@@ -18,11 +18,11 @@ do
     # Clone the LXC container from the template
     pct clone $TEMPLATE_ID $ctid --hostname $name 
 
-    # Set container configurations
-    pct set $ctid --net0 name=eth0,bridge=$BRIDGE,ip=$ip/24,gw=$GATEWAY
-    pct set $ctid --unprivileged 1
-    pct set $ctid --onboot 1
-    pct set $ctid --start 1
+    # Set container configurations with NESTING ENABLED
+    pct set $ctid --net0 name=eth0,bridge=$BRIDGE,ip=$ip/24,gw=$GATEWAY \
+                  --unprivileged 1 \
+                  --features nesting=1 \
+                  --onboot 1
 
     # Start the container
     pct start $ctid
@@ -34,10 +34,13 @@ do
         useradd -m -s /bin/bash $user &&
         echo '$user:$password' | chpasswd &&
         echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers &&
+        usermod -aG docker $user &&
         sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
         sed -i 's/^#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config &&
         systemctl enable ssh &&
-        systemctl restart ssh"
+        systemctl restart ssh &&
+        systemctl enable docker &&
+        systemctl start docker"
 
     echo "User $user has been created inside container $name ($ctid) with SSH access."
 
