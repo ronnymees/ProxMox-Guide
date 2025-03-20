@@ -2,7 +2,7 @@
 TEMPLATE_ID=9100
 STORAGE="local-zfs"
 BRIDGE="vmbr0"
-CSV_FILE="/root/vms.csv"
+CSV_FILE="/root/cts.csv"
 GATEWAY="192.168.1.1"
 
 # Step 1 - Import and process CSV

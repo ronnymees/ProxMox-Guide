@@ -61,5 +61,5 @@ ctid,name,user,password,ip
 ### Clone the template for all student CT's
 
 ```bash
-bash <(wget -qO- ??)
+bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/deploy_cts.sh)
 ```
