@@ -30,6 +30,7 @@ pct create $TEMPLATE_ID $STORAGE:vztmpl/$DEBIAN_TEMPLATE \
     --start 1
 
 # Step 3 - Customizing the container
+echo "Installing docker & tailscale"
 pct exec $TEMPLATE_ID -- bash -c "
     apt update && apt upgrade -y &&
     apt install -y docker.io docker-compose curl &&
@@ -39,17 +40,20 @@ pct exec $TEMPLATE_ID -- bash -c "
     history -c"
 
 # Step 5 - Setup Tailscale
+echo "Acces for Tailscale"
 pct exec $TEMPLATE_ID -- bash -c "
     echo "lxc.cgroup2.devices.allow: c 10:200 rwm" >> /etc/pve/lxc/.conf &&
     echo "lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file" >> /etc/pve/lxc/.conf"
 
 # Step 6 - Enable SSH password authentication
+echo "Enable SSH password authentication"
 pct exec $TEMPLATE_ID -- bash -c "
     sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
     sed -i 's/^#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config &&
     systemctl restart ssh"
 
 # Step 7 - Change the default dhcp to manual
+echo "Change the default dhcp to manual ip"
 pct exec $TEMPLATE_ID -- bash -c "
     sed -i 's/^#\?iface eth0 inet dhcp/iface eth0 inet manual/' /etc/network/interfaces"
 
@@ -58,5 +62,5 @@ echo "Shutting down the container and converting it to a template..."
 pct shutdown $TEMPLATE_ID
 while pct status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
 pct template $TEMPLATE_ID
-echo "LXC container template created successfully with ID $TEMPLATE_ID and IP address $IP_ADDRESS."
+echo "LXC container template created successfully with ID $TEMPLATE_ID and IP address $TEMPLATE_IP."
 
