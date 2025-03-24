@@ -25,6 +25,7 @@ pct create $TEMPLATE_ID $STORAGE:vztmpl/$DEBIAN_TEMPLATE \
     --cores 2 \
     --password $PASSWORD \
     --unprivileged 1 \
+    --features nesting=1 \
     --onboot 1 \
     --start 1
 
@@ -37,13 +38,20 @@ pct exec $TEMPLATE_ID -- bash -c "
     rm /etc/ssh/ssh_host_* &&
     history -c"
 
-# Step 5 - Enable SSH password authentication
+# Step 5 - Setup Tailscale
+
+
+# Step 6 - Enable SSH password authentication
 pct exec $TEMPLATE_ID -- bash -c "
     sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
     sed -i 's/^#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config &&
     systemctl restart ssh"
 
-# Step 6: Shutting down the container and convert it to a template
+# Step 7 - Change the default dhcp to manual
+pct exec $TEMPLATE_ID -- bash -c "
+    sed -i 's/^#\?iface eth0 inet dhcp/iface eth0 inet manual/' /etc/network/interfaces"
+
+# Step 8: Shutting down the container and convert it to a template
 echo "Shutting down the container and converting it to a template..."
 pct shutdown $TEMPLATE_ID
 while pct status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
