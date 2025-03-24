@@ -24,7 +24,6 @@ do
 
     # Set container configurations with NESTING ENABLED
     pct set $ctid --net0 name=eth0,bridge=$BRIDGE,ip=$ip/24,gw=$GATEWAY \
-                  --unprivileged 1 \
                   --features nesting=1 \
                   --onboot 1
 
