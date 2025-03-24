@@ -13,11 +13,15 @@ do
         continue
     fi
 
-    echo "Cloning container $TEMPLATE_ID to $ctid ($name)..."
+    echo "Cloning container $TEMPLATE_ID to $ctid ($name) with ip-adress $ip ..."
 
     # Clone the LXC container from the template
     pct clone $TEMPLATE_ID $ctid --hostname $name 
-
+    while ! pct config $CT_ID &>/dev/null; do
+        echo "Waiting for container $CT_ID to be created..."
+        sleep 2
+    done
+    
     # Set container configurations with NESTING ENABLED
     pct set $ctid --net0 name=eth0,bridge=$BRIDGE,ip=$ip/24,gw=$GATEWAY \
                   --unprivileged 1 \

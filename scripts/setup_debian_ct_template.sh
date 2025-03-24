@@ -39,11 +39,10 @@ pct exec $TEMPLATE_ID -- bash -c "
     rm /etc/ssh/ssh_host_* &&
     history -c"
 
-# Step 5 - Setup Tailscale
-echo "Acces for Tailscale"
-pct exec $TEMPLATE_ID -- bash -c "
-    echo 'lxc.cgroup2.devices.allow: c 10:200 rwm' >> /etc/pve/lxc/$TEMPLATE_ID.conf &&
-    echo 'lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file' >> /etc/pve/lxc/$TEMPLATE_ID.conf"
+# Step 5 - Addig TUND device permissions
+echo "Adding TUN device permissions..."
+echo "lxc.cgroup2.devices.allow: c 10:200 rwm" >> /etc/pve/lxc/${TEMPLATE_ID}.conf
+echo "lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file" >> /etc/pve/lxc/${TEMPLATE_ID}.conf
 
 # Step 6 - Enable SSH password authentication
 echo "Enable SSH password authentication"
@@ -61,6 +60,6 @@ pct exec $TEMPLATE_ID -- bash -c "
 echo "Shutting down the container and converting it to a template..."
 pct shutdown $TEMPLATE_ID
 while pct status $TEMPLATE_ID | grep -q "running"; do sleep 2; done
-#pct template $TEMPLATE_ID
+pct template $TEMPLATE_ID
 echo "LXC container template created successfully with ID $TEMPLATE_ID and IP address $TEMPLATE_IP."
 
