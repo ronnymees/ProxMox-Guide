@@ -42,8 +42,8 @@ pct exec $TEMPLATE_ID -- bash -c "
 # Step 5 - Setup Tailscale
 echo "Acces for Tailscale"
 pct exec $TEMPLATE_ID -- bash -c "
-    echo "lxc.cgroup2.devices.allow: c 10:200 rwm" >> /etc/pve/lxc/.conf &&
-    echo "lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file" >> /etc/pve/lxc/.conf"
+    echo 'lxc.cgroup2.devices.allow: c 10:200 rwm' >> /etc/pve/lxc/.conf &&
+    echo 'lxc.mount.entry: /dev/net/tun dev/net/tun none bind,create=file' >> /etc/pve/lxc/.conf"
 
 # Step 6 - Enable SSH password authentication
 echo "Enable SSH password authentication"
