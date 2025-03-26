@@ -33,7 +33,7 @@ do
 
     # Configure the user inside the container
     pct exec $ctid -- bash -c "
-        apt update && apt install -y openssh-server &&
+        apt update && apt install -y openssh-server sudo &&
         useradd -m -s /bin/bash $user &&
         echo '$user:$password' | chpasswd &&
         usermod -aG sudo $user &&
@@ -41,12 +41,13 @@ do
         usermod -aG docker $user &&
         sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
         sed -i 's/^#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config &&
+        sed -i '/# en_US.UTF-8/s|^# ||' /etc/locale.gen && locale-gen &&
         systemctl enable ssh &&
         systemctl restart ssh &&
         systemctl enable docker &&
         systemctl start docker"
 
-    echo "User $user has been created inside container $name ($ctid) with SSH access."
+    echo "User $user has been created inside container $name ($ctid) with SSH and sudo access."
 
 done < "$CSV_FILE"
 

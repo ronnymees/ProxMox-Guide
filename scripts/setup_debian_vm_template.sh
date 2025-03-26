@@ -1,6 +1,6 @@
 # Settings
 TEMPLATE_ID=9000  
-TEMPLATE_NAME="debian-cloudinit"
+TEMPLATE_NAME="VM-Template"
 STORAGE="local-zfs"
 BRIDGE="vmbr0"
 DEBIAN_IMAGE="debian-12-genericcloud-amd64.qcow2"

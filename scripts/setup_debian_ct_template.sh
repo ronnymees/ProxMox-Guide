@@ -8,7 +8,7 @@ BRIDGE="vmbr0"
 STORAGE="local"
 TEMPLATE_IP="192.168.1.120"
 GATEWAY="192.168.1.1"
-HOSTNAME="debian-template"
+HOSTNAME="LXC-Template"
 PASSWORD="rootadmin"
 
 # Step 1 - download debian
