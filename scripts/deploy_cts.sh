@@ -33,6 +33,8 @@ do
 
     # Configure the user inside the container
     pct exec $ctid -- bash -c "
+        sed -i '/# en_US.UTF-8/s|^# ||' /etc/locale.gen &&
+        locale-gen &&    
         apt update && apt install -y openssh-server sudo &&
         useradd -m -s /bin/bash $user &&
         echo '$user:$password' | chpasswd &&
@@ -41,7 +43,6 @@ do
         usermod -aG docker $user &&
         sed -i 's/^#\?PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config &&
         sed -i 's/^#\?PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config &&
-        sed -i '/# en_US.UTF-8/s|^# ||' /etc/locale.gen && locale-gen &&
         systemctl enable ssh &&
         systemctl restart ssh &&
         systemctl enable docker &&
