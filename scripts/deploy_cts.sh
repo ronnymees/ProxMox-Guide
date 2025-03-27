@@ -52,7 +52,7 @@ do
 
     # Reboot the container to apply pending changes
     pct reboot $ctid
-    while pct status $TEMPLATE_ID | grep -q "running"; done ; do sleep 2
+    while pct status $TEMPLATE_ID | grep -q "stopped"; do sleep 2; done
     echo "Container $name ($ctid) has restarted and is ready for use."
 
 done < "$CSV_FILE"
