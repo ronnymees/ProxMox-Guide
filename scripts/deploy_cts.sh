@@ -51,9 +51,7 @@ do
     echo "User $user has been created inside container $name ($ctid) with SSH and sudo access."
 
     # Reboot the container to apply pending changes
-    pct reboot $ctid
-    while pct status $TEMPLATE_ID | grep -q "stopped"; do sleep 2; done
-    echo "Container $name ($ctid) has restarted and is ready for use."
+    pct reboot $ctid    
 
 done < "$CSV_FILE"
 
