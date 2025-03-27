@@ -2,7 +2,7 @@
 TEMPLATE_ID=9100  
 TEMPLATE_NAME="debian-lxc-template"
 DEBIAN_TEMPLATE="debian-12-standard_12.7-1_amd64.tar.zst"
-RAM_SIZE="1024"
+RAM_SIZE="2048"
 CPU_CORES="1"
 BRIDGE="vmbr0"
 STORAGE="local"

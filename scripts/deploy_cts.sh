@@ -46,9 +46,14 @@ do
         systemctl enable ssh &&
         systemctl restart ssh &&
         systemctl enable docker &&
-        systemctl start docker"
+        systemctl start docker"        
 
     echo "User $user has been created inside container $name ($ctid) with SSH and sudo access."
+
+    # Reboot the container to apply pending changes
+    pct reboot $ctid
+    while pct status $TEMPLATE_ID | grep -q "running"; done ; do sleep 2
+    echo "Container $name ($ctid) has restarted and is ready for use."
 
 done < "$CSV_FILE"
 
