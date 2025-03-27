@@ -46,12 +46,10 @@ do
         systemctl enable ssh &&
         systemctl restart ssh &&
         systemctl enable docker &&
-        systemctl start docker"        
+        systemctl start docker &&
+        sudo reboot now"        
 
     echo "User $user has been created inside container $name ($ctid) with SSH and sudo access."
-
-    # Reboot the container to apply pending changes
-    pct reboot $ctid    
 
 done < "$CSV_FILE"
 
