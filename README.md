@@ -1,65 +1,46 @@
-# Setup student VM's or CT's
+# Guide for the Educational ProxMox cluster
 
-## Virtual Machines
+For educational purposes we have some servers in our serverroom that are setup as a ProxMox cluster.
 
-### Create the VM template
+We use this to:
+* give our students a practical feeling with how things are done in production
+* provide each student with a LXC Container for there lessons (programming, webdevelopment, AI, projects, ...)
+* provide a MQTT broker for communication
+* host finished student projects we want to keep active
 
-At the start of a new academic year you update the script `setup_debian_vm_template.sh` in this repository with the new installation information for Debian, Docker Compose and Tailscale.
+## Hardware
 
-Then run the script from the ProxMox Terminal:
+<!-- TODO: here we place the actual hardware we are using -->
 
-```bash
-bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/setup_debian_vm_template.sh)
-```
-💡 This script will pause for the installation of the OS, you should watch it in the console on ProxMox and wait for it to finish before hitting enter on the script to resume.
+## ProxMox Cluster
 
-### Create the csv-file with student credentials
+<!-- TODO: Guide for the setup of our ProxMox cluster -->
 
-Create the csv-file `vms.csv` containing the student credentials vmid, name, user, password, ip 
+## Network agreements
 
-```csv
-vmid,name,user,password,ip
-111,vmstudent1,student1,passw0rd1,192.168.1.111
-112,vmstudent2,student2,passw0rd2,192.168.1.112
-113,vmstudent3,student3,passw0rd3,192.168.1.113
-```
+* General Services: xxx.xxx.xxx.1-24
+* Templates: xxx.xxx.xxx.25-49
+* Long term projects: xxx.xxx.xxx.50-99
+* Student VM's or LXC's: xxx.xxx.xxx.100-224
+* Development services: xxx.xxx.xxx.225-255
 
-💡It is best to create this file in Excel and save it as .csv. In ProxMox create the file via `nano /root/vms.csv` and copy the contents via **CRTL+C** / **CTRL+V**. Save and close with **CTRL+O** and **CTRL+X**.
+## Setup the MQTT Broker
 
-### Clone the template for all student VM's
+<!-- TODO: Guide for the setup of the MQTT broker VM -->
 
-```bash
-bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/deploy_vms.sh)
-```
+## Create a Virtual Machine for each student
 
-## Containers
+If you want each student to have a VM, you can follow this [guide](/documents/virtual-machines.md).
 
-### Create the CT template
+❗This is not recommended because it uses much more resources of our server.
 
-At te start of the new academic year update the script `setup_debian_ct_template.sh` in this repository with the new installation information.
+## Create a LXC-Container for each student
 
-Then run the script from the ProxMox Terminal:
+If you want each student to have a LXC Container, you can follow this [guide](/documents/lxc-containers.md).
 
-```bash
-bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/setup_debian_ct_template.sh)
-```
-💡 This script will pause for the installation of the OS, you should watch it in the console on ProxMox and wait for it to finish before hitting enter on the script to resume.
+✔️ This is the recommended way to give each student there own virtual workplace.
 
-### Create the csv-file with student credentials
+## Setup a Home Assistant VM
 
-Create the csv-file `cts.csv` containing the student credentials ctid, name, user, password, ip 
+If you want to setup a VM with Home Assistant, you can follow this [guide](/documents/home-assistant-vm.md).
 
-```csv
-ctid,name,user,password,ip
-121,ctstudent1,student1,passw0rd1,192.168.1.121
-122,ctstudent2,student2,passw0rd2,192.168.1.122
-123,ctstudent3,student3,passw0rd3,192.168.1.123
-```
-
-💡It is best to create this file in Excel and save it as .csv. In ProxMox create the file via `nano /root/cts.csv` and copy the contents via **CRTL+C** / **CTRL+V**. Save and close with **CTRL+O** and **CTRL+X**.
-
-### Clone the template for all student CT's
-
-```bash
-bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/deploy_cts.sh)
-```

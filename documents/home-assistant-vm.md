@@ -12,14 +12,14 @@ In this guide we will setup Home Assistant OS on a Virtual Machine on ProxMox.
 
 * Enter the following command line to download:
 
-```bash
-wget <copied address>
-```
+    ```bash
+    wget <copied address>
+    ```
 * Enter the following command line to unpack:
 
-```bash
-unxz </path/to/file.qcow2.xz> # for example haos_ova-15.1.qcow2.xz
-```
+    ```bash
+    unxz </path/to/file.qcow2.xz> # for example haos_ova-15.1.qcow2.xz
+    ```
 
 ## Create the VM
 
@@ -54,10 +54,10 @@ Confirm and finish. **Do not start the VM yet.**
 
 * Enter the following command line to import the OS image from the host to the VM
 
-```bash
-qm importdisk <VM ID> </path/to/file.qcow2> <EFI location>
-# for example qm importdisk 107 haos_ova-15.1.qcow2 local-zfs
-```
+    ```bash
+    qm importdisk <VM ID> </path/to/file.qcow2> <EFI location>
+    # for example qm importdisk 107 haos_ova-15.1.qcow2 local-zfs
+    ```
 
 * In your ProxMox dashboard select the HA VM
 
@@ -73,6 +73,18 @@ qm importdisk <VM ID> </path/to/file.qcow2> <EFI location>
 
 * Check the newly created drive (likely scsi0) and uncheck everything else
 
+## Set a static ip-adress
+
+<!-- TODO: Test this static ip stuff out -->
+
+* Go to the 'Cloud-Init' tab and under 'IP Config' change the default DHCP setting (ip=dhcp) to something like:
+
+    ```ini
+    ip=192.168.1.105/24,gw=192.168.1.1
+    ```
+
+* click 'Regenerate Image' <!-- what is this ?? -->
+
 ## Finish Up
 
 * Start the VM
@@ -81,4 +93,4 @@ qm importdisk <VM ID> </path/to/file.qcow2> <EFI location>
 
 * Navigate to <VM IP>:8123
 
-Done. Everything should be up and running now.
+Done. Home Assistant should be up and running now.
