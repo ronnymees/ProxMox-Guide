@@ -46,6 +46,6 @@ If you want to setup a VM with Home Assistant, you can follow this [guide](/docu
 
 ## Setup the dashboards
 
-<!-- TODO: Guide for the setup of the dashboards -->
+If you want to setup a LXC Container with Grafana Dashboards, you can follow this [guide](/documents/dashboards.md).
 
 

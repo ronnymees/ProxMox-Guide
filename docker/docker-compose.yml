@@ -1,0 +1,61 @@
+version: "3.9"
+ 
+########################### NETWORKS
+networks:
+  default:
+    driver: bridge
+ 
+########################### SERVICES
+services:
+    # InfluxDB - Database for sensor data
+    influxdb:
+    image: influxdb:latest
+    container_name: influxdb
+    networks:
+        - default
+    security_opt:
+        - no-new-privileges:true
+    restart: unless-stopped
+    ports:
+        - "8086:8086"
+    volumes:
+        - $DOCKERDIR/appdata/influxdb2/config:/etc/influxdb2
+        - $DOCKERDIR/appdata/influxdb2/db:/var/lib/influxdb2
+    # Grafana - Graphical data visualization
+    grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    security_opt:
+        - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+        - default
+    ports:
+        - "3000:3000"
+    user: root
+    volumes:
+        - $DOCKERDIR/appdata/grafana:/var/lib/grafana
+    environment:
+        GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource,grafana-worldmap-panel,grafana-piechart-panel"    
+    # Unpoller - Telemetry and observabillity for a Unifi network
+    unpoller:
+    image: ghcr.io/unpoller/unpoller:latest
+    container_name: unpoller
+    security_opt:
+        - no-new-privileges:true
+    restart: unless-stopped
+    networks:
+        - default
+    environment:
+      - UP_INFLUXDB_USER=${INFLUXDB_ADMIN_USER}
+      - UP_INFLUXDB_PASS=${INFLUXDB_ADMIN_PASSWORD}
+      - UP_INFLUXDB_BUCKET=${INFLUXDB_BUCKET}
+      - UP_INFLUXDB_AUTH_TOKEN=${INFLUXDB_ADMIN_TOKEN}
+      - UP_INFLUXDB_URL=http://influxdb:8086
+      - UP_UNIFI_DEFAULT_USER=${UNIFI_USER}
+      - UP_UNIFI_DEFAULT_PASS=${UNIFI_PASS}
+      - UP_UNIFI_DEFAULT_URL=${UNIFI_URL}
+      - UP_POLLER_DEBUG=${POLLER_DEBUG}
+      - UP_UNIFI_DEFAULT_SAVE_DPI=${POLLER_SAVE_DPI}
+    volumes:
+        - $DOCKERDIR/up.conf:/etc/unpoller/up.conf   
