@@ -10,6 +10,13 @@ For this scripts have been written.
 
 Then run the script from the ProxMox Terminal:
 
+<!-- TODO: Test for private repo -->
+<!-- 
+use this commandline : 
+bash <(wget -qO- --header 'Authorization: token PERSONAL_ACCESS_TOKEN_HERE' https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/setup_debian_ct_template.sh)
+The token you can get from the GitHub Repo
+-->
+
 ```bash
 bash <(wget -qO- https://raw.githubusercontent.com/ronnymees/ProxMox-student-vms/refs/heads/master/scripts/setup_debian_ct_template.sh)
 ```
