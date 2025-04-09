@@ -10,7 +10,33 @@ We use this to:
 
 ## Hardware
 
-<!-- TODO: here we place the actual hardware we are using -->
+For the ProxMox cluster we are using 3 HP ProLiant DL380 G10 8x SFF servers:
+* 1x HP 8x bays 2,5" SFF SAS/SATA G9/G10 SFF
+* 2x Intel Xeon Gold 6154 18x Core 3.0 GHz
+* 12x HP 64GB DDR4 2400 MHz 19200P ECC gen.
+* 1x HP Smart Array S100i software raid
+* 1x HP Ethernet 1GB 4-port (intern) + IL04 Basic
+* 1x Dell Intel XXV710-DA2 2x 10/25GBs SFP28 Converged Network Adapter Ref
+* 1x HP ILO Advanced
+* 4x HPE 1.6 TB SAS SSD 12G SFF P04174-003
+* 2x Intel D3 S4510 480GB TLC SATA 6G M.2
+* 8x HP Caddy Tray G8/G9/G10 2.5" SFF
+* 1x HP Rack Rails Sliding ProLiant DL380 G9/G10
+* 2x HP Proliant G9/G10 800W PSU - 723600-201, 754381-001
+
+For the Backup we are using 1 HP Proliant DL380 G10 8x SFF server:
+* 1x HP 8x bays 2,5" SFF SAS/SATA G9/G10 SFF
+* 2x Intel Xeon Gold 5118 12x Core 2.3 GHz
+* 4x HP 32GB DDR4 2400 MHz 19200P ECC gen.
+* 1x HP Smart Array S100i software raid
+* 1x HP Ethernet 1GB 4-port (intern) + IL04 Basic
+* 1x Dell Intel X520-DA2 Dual Port 10GB SFP+ PCI-e 8x Adapter
+* 1x HP ILO Advanced
+* 6x HGST S3300 7.68TB SAS SSD 12Gbps SFF
+* 2x Intel D3 S4510 480GB TLC SATA 6G M.2
+* 8x HP Caddy Tray G8/G9/G10 2.5" SFF
+* 1x HP Rack Rails Sliding ProLiant DL380 G9/G10
+* 2x HP Proliant G9/G10 800W PSU - 723600-201, 754381-001
 
 ## ProxMox Cluster
 
