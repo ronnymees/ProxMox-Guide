@@ -26,7 +26,7 @@ We use this to:
 
 ## Setup the MQTT Broker
 
-<!-- TODO: Guide for the setup of the MQTT broker VM -->
+To create a MQTT Broker LXC container, you can follow this [guide](/documents/mqtt-broker-lxc.md)
 
 ## Create a Virtual Machine for each student
 
@@ -43,4 +43,9 @@ If you want each student to have a LXC Container, you can follow this [guide](/d
 ## Setup a Home Assistant VM
 
 If you want to setup a VM with Home Assistant, you can follow this [guide](/documents/home-assistant-vm.md).
+
+## Setup the dashboards
+
+<!-- TODO: Guide for the setup of the dashboards -->
+
 
