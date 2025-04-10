@@ -1,5 +1,9 @@
 # Setup a MQTT Broker
 
+<div align="center">
+<img width=100px src="../media/mosquitto-logo.png">
+</div>
+
 <!-- TODO: This must still be tested completly, and make the IP adress static -->
 
 ## Create the LXC Container

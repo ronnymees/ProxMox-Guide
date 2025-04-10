@@ -1,5 +1,11 @@
 # Grafana dashboards on a LXC Container
 
+<div align="center">
+<img width=100px src="../media/grafana-logo.png">
+<img width=100px src="../media/influxdb-logo.svg">
+<img width=100px src="../media/docker-logo.png">
+</div>
+
 <!-- TODO: This guide needs to be tested and debugged -->
 
 In this guide we will setup Grafana dashboards for the ProxMox cluster and Unify network.

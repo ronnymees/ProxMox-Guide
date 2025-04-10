@@ -1,5 +1,9 @@
 # Home Assistant OS on a VM
 
+<div align="center">
+<img width=100px src="../media/home-assistant-logo.svg">
+</div>
+
 In this guide we will setup Home Assistant OS on a Virtual Machine on ProxMox.
 
 ## Download and unpack Home Assistant OS
