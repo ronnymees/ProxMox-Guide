@@ -1,3 +1,7 @@
+<div align="center">
+<img width=100px src="./media/ict-academy-logo.png">
+</div>
+
 # Guide for the Educational ProxMox cluster
 
 For educational purposes we have some servers in our serverroom that are setup as a ProxMox cluster.
@@ -7,6 +11,8 @@ We use this to:
 * provide each student with a LXC Container for there lessons (programming, webdevelopment, AI, projects, ...)
 * provide a MQTT broker for communication
 * host finished student projects we want to keep active
+
+This documentation will guide you through the hardware and software setup.
 
 ## Hardware
 
